@@ -1,0 +1,17 @@
+Options -Indexes
+
+# 1. Force HTTPS on all external devices
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Block direct access to config and src
+    RewriteRule ^(config|src)/ - [F,L]
+</IfModule>
+
+# 2. Prevent caching issues on API endpoints
+<FilesMatch "auth-actions\.php$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+</FilesMatch>

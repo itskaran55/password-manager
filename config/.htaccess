@@ -1,0 +1,3 @@
+# password-manager/config/.htaccess
+Order deny,allow
+Deny from all
